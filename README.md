@@ -260,28 +260,6 @@ Shortlist / Reject
 Export CSV Report
 ```
 
----
-
-# 📸 Screenshots
-
-## Login Page
-
-![Login](screenshots/login.png)
-
-## Employer Dashboard
-
-![Dashboard](screenshots/dashboard.png)
-
-## Candidate Ranking
-
-![Ranking](screenshots/ranking.png)
-
-## Resume Analysis
-
-![Analysis](screenshots/analysis.png)
-
----
-
 # 🚀 Installation
 
 ## Clone Repository
