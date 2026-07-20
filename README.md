@@ -362,19 +362,7 @@ GEMINI_API_KEY=your_google_gemini_api_key
 - Multi-Language Resume Support
 - Advanced Bias Detection
 
----
 
-# 👨‍💻 Team
-
-### PGCP-AC-011
-
-**Centre for Development of Advanced Computing (C-DAC), Bangalore**
-
-**PG Diploma in Advanced Computing (PG-DAC)**
-
-**Batch: February 2026**
-
-**Project:** AI-Driven Resume Screening & Candidate Ranking System
 
 ---
 
