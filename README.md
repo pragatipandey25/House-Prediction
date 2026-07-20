@@ -401,7 +401,7 @@ If you found this project useful:
 
 <div align="center">
 
-### Made by Team PGCP-AC-011
+### Made by Pragati Pandey
 
 AI-Driven Resume Screening & Candidate Ranking System
 
