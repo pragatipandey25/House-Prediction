@@ -260,28 +260,6 @@ Shortlist / Reject
 Export CSV Report
 ```
 
----
-
-# 📸 Screenshots
-
-## Login Page
-
-![Login](screenshots/login.png)
-
-## Employer Dashboard
-
-![Dashboard](screenshots/dashboard.png)
-
-## Candidate Ranking
-
-![Ranking](screenshots/ranking.png)
-
-## Resume Analysis
-
-![Analysis](screenshots/analysis.png)
-
----
-
 # 🚀 Installation
 
 ## Clone Repository
@@ -384,19 +362,7 @@ GEMINI_API_KEY=your_google_gemini_api_key
 - Multi-Language Resume Support
 - Advanced Bias Detection
 
----
 
-# 👨‍💻 Team
-
-### PGCP-AC-011
-
-**Centre for Development of Advanced Computing (C-DAC), Bangalore**
-
-**PG Diploma in Advanced Computing (PG-DAC)**
-
-**Batch: February 2026**
-
-**Project:** AI-Driven Resume Screening & Candidate Ranking System
 
 ---
 
@@ -435,7 +401,7 @@ If you found this project useful:
 
 <div align="center">
 
-### Made by Team PGCP-AC-011
+### Made by Pragati Pandey
 
 AI-Driven Resume Screening & Candidate Ranking System
 
