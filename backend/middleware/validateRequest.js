@@ -1,11 +1,29 @@
+// import { validationResult } from "express-validator";
+
+// const validateRequestMiddleware = (req, res, next) => {
+//     const errors = validationResult(req);
+
+//     if (!errors.isEmpty()) {
+//         return res.status(400).json({ errors: errors.array() });
+//     }
+//     next();
+// };
+
+// export default validateRequestMiddleware;
 import { validationResult } from "express-validator";
 
 const validateRequestMiddleware = (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        console.log("Validation Errors:", errors.array()); // <-- Add this
+
+        return res.status(400).json({
+            message: "Validation failed",
+            errors: errors.array()
+        });
     }
+
     next();
 };
 

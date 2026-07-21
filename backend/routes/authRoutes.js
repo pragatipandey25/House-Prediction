@@ -6,17 +6,15 @@ import validateRequest from '../middleware/validateRequest.js';
 const router = express.Router();
 
 router.post(
-    '/register',
-    [
-        body('name', 'Name is required').not().isEmpty(),
-        body('email', 'Please include a valid email').isEmail(),
-        body('password', 'Password must be at least 8 characters').isLength({ min: 8 }),
-        body('role', 'Role must be either employer or candidate').isIn(['employer', 'candidate']),
-    ],
-    validateRequest,
-    registerUser
+  "/register",
+  [
+    body("name", "Name is required").notEmpty(),
+    body("email", "Please include a valid email").isEmail(),
+    body("password", "Password must be at least 8 characters").isLength({ min: 8 }),
+  ],
+  validateRequest,
+  registerUser
 );
-
 router.post(
     '/login',
     [

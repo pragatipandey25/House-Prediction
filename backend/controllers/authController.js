@@ -8,7 +8,7 @@ const generateToken = (id, role) => {
 
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password, role } = req.body;
+        const { name, email, password } = req.body;
 
         const existingUser = await User.findOne({ email });
 
@@ -23,17 +23,17 @@ export const registerUser = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            role
+            role: "candidate"
         });
 
-        return res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            token: generateToken(user._id, user.role)
-        });
-
+       return res.status(201).json({
+    message: "Registration successful",
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    token: generateToken(user._id, user.role)
+});
     } catch (error) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }
