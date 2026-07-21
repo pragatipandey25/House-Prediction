@@ -62,7 +62,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Section */}
-      <div className="hidden md:flex w-1/2 bg-gradient-to-br from-indigo-700 via-blue-600 to-cyan-500 text-white p-16 flex-col justify-center">
+      <div className="hidden md:flex w-1/2 bg-linear-to-br from-indigo-700 via-blue-600 to-cyan-500 text-white p-16 flex-col justify-center">
         <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold mb-8">
           AI
         </div>
