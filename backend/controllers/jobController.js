@@ -5,14 +5,23 @@ import Job from '../models/Job.js';
 export const createJob = async (req, res) => {
   try {
     const {
-      title, description, requiredSkills,
-      experience, education, salary, location, company, deadline
+      title, description, responsibilities, requirements,
+      preferredSkills, requiredSkills,
+      experience, minimumExperience, education, requiredEducation,
+      employmentType, salary, location, company, deadline
     } = req.body;
 
     const job = await Job.create({
       employerId: req.user._id,
-      title, description, requiredSkills,
-      experience, education, salary, location, company, deadline
+      title, description, responsibilities, requirements,
+      preferredSkills, requiredSkills: requiredSkills || [],
+      experience: experience || '',
+      minimumExperience: minimumExperience || '',
+      education: education || '',
+      requiredEducation: requiredEducation || '',
+      employmentType: employmentType || 'full-time',
+      salary: salary || 'Not specified',
+      location, company, deadline
     });
 
     return res.status(201).json({

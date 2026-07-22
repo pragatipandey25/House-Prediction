@@ -2,17 +2,18 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "candidate",
   });
 
   const handleChange = (e) => {
@@ -24,6 +25,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
 
     try {
       setLoading(true);
@@ -32,14 +34,16 @@ const Login = () => {
 
       console.log("Login Response:", response);
 
+      const { token, user } = response;
+
       // Save token
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", token);
 
       const userData = {
-        _id: response._id,
-        name: response.name,
-        email: response.email,
-        role: response.role,
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
       };
 
       // Save user
@@ -50,15 +54,14 @@ const Login = () => {
 
       // Redirect to role-specific dashboard after successful login
       const dashboardRoutes = {
-        candidate: "/candidate/dashboard",
-        employer: "/employer/dashboard",
-        admin: "/admin/dashboard",
+        candidate: "/candidate-dashboard",
+        employer: "/employer-dashboard",
+        admin: "/admin-dashboard",
       };
       navigate(dashboardRoutes[userData.role] || "/");
     } catch (error) {
       console.log("LOGIN ERROR:", error.response?.data);
-
-      alert(error.response?.data?.message || "Login Failed");
+      setErrorMessage(error.response?.data?.message || "Login Failed");
     } finally {
       setLoading(false);
     }
@@ -119,23 +122,18 @@ const Login = () => {
             required
           />
 
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="w-full p-4 border rounded-xl mb-6 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="candidate">👤 Candidate</option>
-            <option value="employer">💼 Employer</option>
-            <option value="admin">🛡️ Admin</option>
-          </select>
+          {errorMessage && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
+              {errorMessage}
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition disabled:bg-indigo-400"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition disabled:bg-indigo-400 flex items-center justify-center gap-2"
           >
-            {loading ? "Signing In..." : "Sign In"}
+            {loading ? <LoadingSpinner size="sm" text="" /> : "Sign In"}
           </button>
 
           <p className="text-center text-slate-500 mt-6">

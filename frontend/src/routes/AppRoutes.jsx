@@ -18,6 +18,8 @@ import CreateJob from "../pages/CreateJob";
 import EditJob from "../pages/EditJob";
 import ViewJobs from "../pages/ViewJobs";
 import JobDetail from "../pages/JobDetail";
+import JobAnalysis from "../pages/JobAnalysis";
+import AnalysisDetail from "../pages/AnalysisDetail";
 
 // Admin Pages
 import AdminDashboard from "../pages/AdminDashboard";
@@ -43,7 +45,7 @@ const AppRoutes = () => {
 
         {/* Candidate Routes */}
         <Route
-          path="/candidate/dashboard"
+          path="/candidate-dashboard"
           element={
             <ProtectedRoute allowedRoles={["candidate"]}>
               <CandidateDashboard />
@@ -77,7 +79,7 @@ const AppRoutes = () => {
 
         {/* Employer Routes */}
         <Route
-          path="/employer/dashboard"
+          path="/employer-dashboard"
           element={
             <ProtectedRoute allowedRoles={["employer"]}>
               <EmployerDashboard />
@@ -116,10 +118,26 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/employer/jobs/:id/analyze"
+          element={
+            <ProtectedRoute allowedRoles={["employer"]}>
+              <JobAnalysis />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employer/analysis/:id"
+          element={
+            <ProtectedRoute allowedRoles={["employer"]}>
+              <AnalysisDetail />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Admin Routes */}
         <Route
-          path="/admin/dashboard"
+          path="/admin-dashboard"
           element={
             <ProtectedRoute allowedRoles={["admin"]}>
               <AdminDashboard />

@@ -14,18 +14,15 @@ const Navbar = () => {
 
   const navLinks = {
     candidate: [
-      { to: "/candidate/dashboard", label: "Dashboard" },
+      { to: "/candidate-dashboard", label: "Dashboard" },
       { to: "/candidate/resume", label: "My Resume" },
-      { to: "/candidate/jobs", label: "Browse Jobs" },
-      { to: "/candidate/applications", label: "My Applications" },
     ],
     employer: [
-      { to: "/employer/dashboard", label: "Dashboard" },
+      { to: "/employer-dashboard", label: "Dashboard" },
       { to: "/employer/jobs", label: "My Jobs" },
-      { to: "/employer/jobs/create", label: "Post Job" },
     ],
     admin: [
-      { to: "/admin/dashboard", label: "Dashboard" },
+      { to: "/admin-dashboard", label: "Dashboard" },
       { to: "/admin/users", label: "Users" },
       { to: "/admin/jobs", label: "Jobs" },
       { to: "/admin/applications", label: "Applications" },
@@ -43,10 +40,10 @@ const Navbar = () => {
             <Link
               to={
                 user.role === "candidate"
-                  ? "/candidate/dashboard"
+                  ? "/candidate-dashboard"
                   : user.role === "employer"
-                    ? "/employer/dashboard"
-                    : "/admin/dashboard"
+                    ? "/employer-dashboard"
+                    : "/admin-dashboard"
               }
               className="flex items-center gap-2"
             >

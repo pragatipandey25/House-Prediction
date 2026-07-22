@@ -2,10 +2,6 @@ import Application from '../models/Application.js';
 import Job from '../models/Job.js';
 import Resume from '../models/Resume.js';
 import {
-  calculateSkillMatch,
-  calculateExperienceMatch,
-  calculateEducationMatch,
-  calculateCertificationScore,
   calculateOverallScore,
   getRanking
 } from '../utils/rankingEngine.js';
@@ -45,33 +41,37 @@ export const applyForJob = async (req, res) => {
       return res.status(400).json({ message: 'You have already applied for this job' });
     }
 
-    // Calculate AI scores
-    const skillMatch = calculateSkillMatch(
-      resume.parsedData?.skills || [],
-      job.requiredSkills || []
+    // Build full job description for Gemini evaluation
+    const jobDescription = `
+Job Title: ${job.title}
+Company: ${job.company}
+Location: ${job.location}
+Experience Required: ${job.experience}
+Education Required: ${job.education}
+Salary: ${job.salary}
+Required Skills: ${(job.requiredSkills || []).join(', ')}
+Description: ${job.description}
+`;
+
+    // Call Gemini once to evaluate resume against job description
+    const analysis = await analyzeWithGemini(
+      resume.parsedData || { rawText: resume.rawText },
+      jobDescription
     );
 
-    const experienceMatch = calculateExperienceMatch(
-      resume.parsedData?.experience || [],
-      job.experience || ''
-    );
+    // Use Gemini's evaluated scores for the overall score calculation
+    const resumeScore = analysis.resumeScore || 0;
+    const skillMatch = analysis.skillMatch || 0;
+    const experienceMatch = analysis.experienceMatch || 0;
+    const educationMatch = analysis.educationMatch || 0;
+    const certificationScore = analysis.certificationScore || 0;
 
-    const educationMatch = calculateEducationMatch(
-      resume.parsedData?.education || [],
-      job.education || ''
-    );
-
-    const certifications = calculateCertificationScore(
-      resume.parsedData?.certifications || []
-    );
-
-    const resumeScore = resume.aiScore?.resumeScore || 70;
     const overallScore = calculateOverallScore({
       resumeScore,
       skillMatch,
       experienceMatch,
       educationMatch,
-      certifications
+      certifications: certificationScore
     });
 
     const application = await Application.create({
@@ -85,11 +85,21 @@ export const applyForJob = async (req, res) => {
         skillMatch,
         experienceMatch,
         educationMatch,
-        atsScore: resume.aiScore?.atsScore || 0,
+        certificationScore,
+        communicationScore: analysis.communicationScore || 0,
+        leadershipScore: analysis.leadershipScore || 0,
+        atsScore: analysis.atsScore || 0,
         ranking: getRanking(overallScore),
-        strengths: resume.aiScore?.strengths || [],
-        weaknesses: resume.aiScore?.weaknesses || [],
-        recommendations: resume.aiScore?.recommendations || []
+        recommendation: analysis.recommendation || '',
+        strengths: analysis.strengths || [],
+        weaknesses: analysis.weaknesses || [],
+        missingSkills: analysis.missingSkills || [],
+        recommendations: analysis.recommendations || []
+      },
+      aiMetadata: {
+        model: analysis._metadata?.model || '',
+        analyzedAt: analysis._metadata?.analyzedAt || new Date(),
+        promptVersion: analysis._metadata?.promptVersion || ''
       }
     });
 
@@ -270,25 +280,22 @@ export const getCandidateRankings = async (req, res) => {
       })
       .sort('-createdAt');
 
-    // Calculate rankings
+    // Use stored AI scores from Gemini evaluation (no re-calling Gemini)
     const rankedApplications = applications.map((app, index) => {
-      const candidateSkills = app.resumeId?.parsedData?.skills || [];
-      const candidateExperience = app.resumeId?.parsedData?.experience || [];
-      const candidateEducation = app.resumeId?.parsedData?.education || [];
-      const candidateCertifications = app.resumeId?.parsedData?.certifications || [];
-      const resumeScore = app.resumeId?.aiScore?.resumeScore || app.aiScore?.resumeScore || 0;
-
-      const skillMatch = calculateSkillMatch(candidateSkills, job.requiredSkills);
-      const experienceMatch = calculateExperienceMatch(candidateExperience, job.experience);
-      const educationMatch = calculateEducationMatch(candidateEducation, job.education);
-      const certifications = calculateCertificationScore(candidateCertifications);
-
-      const overallScore = calculateOverallScore({
+      const aiScore = app.aiScore || {};
+      
+      // Use Gemini-stored scores; fall back to rule-based if not available
+      const resumeScore = aiScore.resumeScore || 0;
+      const skillMatch = aiScore.skillMatch || 0;
+      const experienceMatch = aiScore.experienceMatch || 0;
+      const educationMatch = aiScore.educationMatch || 0;
+      const certificationScore = aiScore.certificationScore || 0;
+      const overallScore = aiScore.overallScore || calculateOverallScore({
         resumeScore,
         skillMatch,
         experienceMatch,
         educationMatch,
-        certifications
+        certifications: certificationScore
       });
 
       return {
@@ -302,9 +309,17 @@ export const getCandidateRankings = async (req, res) => {
           skillMatch,
           experienceMatch,
           educationMatch,
-          atsScore: app.aiScore?.atsScore || app.resumeId?.aiScore?.atsScore || 0
+          certificationScore,
+          communicationScore: aiScore.communicationScore || 0,
+          leadershipScore: aiScore.leadershipScore || 0,
+          atsScore: aiScore.atsScore || 0
         },
         ranking: getRanking(overallScore),
+        recommendation: aiScore.recommendation || '',
+        strengths: aiScore.strengths || [],
+        weaknesses: aiScore.weaknesses || [],
+        missingSkills: aiScore.missingSkills || [],
+        recommendations: aiScore.recommendations || [],
         status: app.status,
         appliedDate: app.createdAt
       };

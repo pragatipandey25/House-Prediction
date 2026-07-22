@@ -55,7 +55,9 @@ export const parseResumeById = async (req, res) => {
       return res.status(404).json({ message: 'Resume file not found on server' });
     }
 
+    console.log(`[parseResume] Starting parse for file: ${resume.originalName}, type: ${resume.fileType}, path: ${filePath}`);
     const { rawText, parsedData } = await parseResume(filePath, resume.fileType);
+    console.log(`[parseResume] Successfully parsed resume for: ${parsedData.name || 'Unknown'}`);
 
     resume.rawText = rawText;
     resume.parsedData = parsedData;
@@ -67,7 +69,8 @@ export const parseResumeById = async (req, res) => {
       parsedData
     });
   } catch (error) {
-    return res.status(500).json({ message: 'Server error', error: error.message });
+    console.error(`[parseResume] Failed to parse resume:`, error);
+    return res.status(500).json({ message: 'Failed to parse resume', error: error.message });
   }
 };
 
@@ -97,16 +100,22 @@ export const analyzeResume = async (req, res) => {
     resume.aiScore = {
       resumeScore: analysis.resumeScore || 0,
       atsScore: analysis.atsScore || 0,
-      technicalSkills: analysis.technicalSkills || 0,
-      communication: analysis.communication || 0,
+      skillMatch: analysis.skillMatch || 0,
+      communicationScore: analysis.communicationScore || 0,
       experienceMatch: analysis.experienceMatch || 0,
       educationMatch: analysis.educationMatch || 0,
+      certificationScore: analysis.certificationScore || 0,
+      leadershipScore: analysis.leadershipScore || 0,
       missingSkills: analysis.missingSkills || [],
       strengths: analysis.strengths || [],
       weaknesses: analysis.weaknesses || [],
       recommendations: analysis.recommendations || [],
-      summary: analysis.summary || '',
-      ranking: analysis.ranking || 'Not Rated'
+      recommendation: analysis.recommendation || ''
+    };
+    resume.aiMetadata = {
+      model: analysis._metadata?.model || '',
+      analyzedAt: analysis._metadata?.analyzedAt || new Date(),
+      promptVersion: analysis._metadata?.promptVersion || ''
     };
     resume.status = 'analyzed';
     await resume.save();

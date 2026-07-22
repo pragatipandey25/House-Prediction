@@ -1,5 +1,5 @@
 import fs from 'fs';
-import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import mammoth from 'mammoth';
 
 // Common tech skills for keyword matching
@@ -39,7 +39,9 @@ const LANGUAGE_KEYWORDS = [
 
 export async function extractTextFromPDF(filePath) {
   const dataBuffer = fs.readFileSync(filePath);
-  const pdf = await pdfjsLib.getDocument({ data: dataBuffer }).promise;
+  const uint8Array = new Uint8Array(dataBuffer.buffer, dataBuffer.byteOffset, dataBuffer.byteLength);
+  const loadingTask = pdfjsLib.getDocument({ data: uint8Array });
+  const pdf = await loadingTask.promise;
   let fullText = '';
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
@@ -89,11 +91,18 @@ export async function parseResumeText(text) {
     if (trimmed &&
         !trimmed.includes('@') &&
         !phoneRegex.test(trimmed) &&
-        trimmed.length < 50 &&
-        !trimmed.match(/^(experience|education|skills|projects|work|summary|profile)/i) &&
-        !trimmed.match(/^[A-Z\s]{2,}$/) === false) {
-      parsed.name = trimmed;
-      break;
+        !trimmed.match(/^(experience|education|skills|projects|work|summary|profile)/i)) {
+      // Try to extract a name pattern (two consecutive capitalized words) from the start of the line
+      const nameMatch = trimmed.match(/^([A-Z][a-z]+(?:\s[A-Z][a-z]+)+)/);
+      if (nameMatch) {
+        parsed.name = nameMatch[1];
+        break;
+      }
+      // Fallback: if line is short (< 50 chars) and doesn't look like a section
+      if (trimmed.length < 50 && !trimmed.match(/^[A-Z\s]{2,}$/)) {
+        parsed.name = trimmed;
+        break;
+      }
     }
   }
 

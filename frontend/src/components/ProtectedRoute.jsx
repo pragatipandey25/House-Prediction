@@ -11,9 +11,9 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     // Redirect to their appropriate dashboard
     const redirectMap = {
-      candidate: "/candidate/dashboard",
-      employer: "/employer/dashboard",
-      admin: "/admin/dashboard",
+      candidate: "/candidate-dashboard",
+      employer: "/employer-dashboard",
+      admin: "/admin-dashboard",
     };
     return <Navigate to={redirectMap[user.role] || "/"} replace />;
   }

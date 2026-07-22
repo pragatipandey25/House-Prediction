@@ -50,16 +50,22 @@ const resumeSchema = new mongoose.Schema({
   aiScore: {
     resumeScore: { type: Number, default: 0 },
     atsScore: { type: Number, default: 0 },
-    technicalSkills: { type: Number, default: 0 },
-    communication: { type: Number, default: 0 },
+    skillMatch: { type: Number, default: 0 },
+    communicationScore: { type: Number, default: 0 },
     experienceMatch: { type: Number, default: 0 },
     educationMatch: { type: Number, default: 0 },
+    certificationScore: { type: Number, default: 0 },
+    leadershipScore: { type: Number, default: 0 },
     missingSkills: [{ type: String }],
     strengths: [{ type: String }],
     weaknesses: [{ type: String }],
     recommendations: [{ type: String }],
-    summary: { type: String, default: '' },
-    ranking: { type: String, default: 'Not Rated' }
+    recommendation: { type: String, default: '' }
+  },
+  aiMetadata: {
+    model: { type: String, default: '' },
+    analyzedAt: { type: Date, default: null },
+    promptVersion: { type: String, default: '' }
   },
   status: {
     type: String,

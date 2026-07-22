@@ -13,9 +13,15 @@ const EditJob = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    responsibilities: "",
+    requirements: "",
+    preferredSkills: "",
     requiredSkills: "",
     experience: "",
+    minimumExperience: "",
     education: "",
+    requiredEducation: "",
+    employmentType: "full-time",
     salary: "",
     location: "",
     company: "",
@@ -33,9 +39,15 @@ const EditJob = () => {
       setFormData({
         title: job.title || "",
         description: job.description || "",
+        responsibilities: (job.responsibilities || []).join("\n"),
+        requirements: (job.requirements || []).join("\n"),
+        preferredSkills: (job.preferredSkills || []).join(", "),
         requiredSkills: (job.requiredSkills || []).join(", "),
         experience: job.experience || "",
+        minimumExperience: job.minimumExperience || "",
         education: job.education || "",
+        requiredEducation: job.requiredEducation || "",
+        employmentType: job.employmentType || "full-time",
         salary: job.salary || "",
         location: job.location || "",
         company: job.company || "",
@@ -60,6 +72,18 @@ const EditJob = () => {
       const jobData = {
         ...formData,
         requiredSkills: formData.requiredSkills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        responsibilities: formData.responsibilities
+          .split("\n")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        requirements: formData.requirements
+          .split("\n")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        preferredSkills: formData.preferredSkills
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean),

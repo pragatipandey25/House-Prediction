@@ -15,6 +15,9 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Job description is required']
   },
+  responsibilities: [{ type: String, trim: true }],
+  requirements: [{ type: String, trim: true }],
+  preferredSkills: [{ type: String, trim: true }],
   requiredSkills: [{
     type: String,
     trim: true
@@ -23,9 +26,22 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Experience requirement is required']
   },
+  minimumExperience: {
+    type: String,
+    default: ''
+  },
   education: {
     type: String,
     required: [true, 'Education requirement is required']
+  },
+  requiredEducation: {
+    type: String,
+    default: ''
+  },
+  employmentType: {
+    type: String,
+    enum: ['full-time', 'part-time', 'contract', 'internship', 'freelance'],
+    default: 'full-time'
   },
   salary: {
     type: String,

@@ -10,9 +10,15 @@ const CreateJob = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    responsibilities: "",
+    requirements: "",
+    preferredSkills: "",
     requiredSkills: "",
     experience: "",
+    minimumExperience: "",
     education: "",
+    requiredEducation: "",
+    employmentType: "full-time",
     salary: "",
     location: "",
     company: "",
@@ -30,6 +36,18 @@ const CreateJob = () => {
       const jobData = {
         ...formData,
         requiredSkills: formData.requiredSkills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        responsibilities: formData.responsibilities
+          .split("\n")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        requirements: formData.requirements
+          .split("\n")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        preferredSkills: formData.preferredSkills
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean),
@@ -104,6 +122,23 @@ const CreateJob = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
+                Employment Type
+              </label>
+              <select
+                name="employmentType"
+                value={formData.employmentType}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="full-time">Full-time</option>
+                <option value="part-time">Part-time</option>
+                <option value="contract">Contract</option>
+                <option value="internship">Internship</option>
+                <option value="freelance">Freelance</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Salary
               </label>
               <input
@@ -131,6 +166,19 @@ const CreateJob = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
+                Minimum Experience
+              </label>
+              <input
+                type="text"
+                name="minimumExperience"
+                value={formData.minimumExperience}
+                onChange={handleChange}
+                placeholder="e.g. 2 years"
+                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Education Required *
               </label>
               <input
@@ -140,6 +188,19 @@ const CreateJob = () => {
                 onChange={handleChange}
                 placeholder="e.g. Bachelor's in CS"
                 required
+                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Required Education
+              </label>
+              <input
+                type="text"
+                name="requiredEducation"
+                value={formData.requiredEducation}
+                onChange={handleChange}
+                placeholder="e.g. Master's preferred"
                 className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
@@ -169,6 +230,19 @@ const CreateJob = () => {
                 className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Preferred Skills (comma separated)
+              </label>
+              <input
+                type="text"
+                name="preferredSkills"
+                value={formData.preferredSkills}
+                onChange={handleChange}
+                placeholder="e.g. TypeScript, AWS, Docker"
+                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
           </div>
 
           <div>
@@ -182,6 +256,34 @@ const CreateJob = () => {
               rows={6}
               placeholder="Describe the role, responsibilities, and qualifications..."
               required
+              className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Responsibilities (one per line)
+            </label>
+            <textarea
+              name="responsibilities"
+              value={formData.responsibilities}
+              onChange={handleChange}
+              rows={4}
+              placeholder="Lead development of React applications&#10;Mentor junior developers&#10;Collaborate with cross-functional teams"
+              className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Requirements (one per line)
+            </label>
+            <textarea
+              name="requirements"
+              value={formData.requirements}
+              onChange={handleChange}
+              rows={4}
+              placeholder="5+ years of React experience&#10;Strong understanding of JavaScript&#10;Experience with REST APIs"
               className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
             />
           </div>
