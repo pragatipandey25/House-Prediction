@@ -58,7 +58,7 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-indigo-50/30 to-cyan-50/30 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-gray-50 via-indigo-50/30 to-cyan-50/30 flex items-center justify-center">
         <LoadingSpinner text="Loading admin dashboard..." />
       </div>
     );
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
   const { users, jobs, applications, charts } = data || {};
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-indigo-50/30 to-cyan-50/30">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 via-indigo-50/30 to-cyan-50/30">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
@@ -162,7 +162,7 @@ const AdminDashboard = () => {
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="flex items-center justify-center h-[300px] text-gray-400">
+                <div className="flex items-center justify-center h-75 text-gray-400">
                   <p>No data available</p>
                 </div>
               )}
