@@ -48,8 +48,13 @@ const Login = () => {
       // Update global auth context
       login(userData);
 
-      // Redirect to home after successful login
-      navigate("/");
+      // Redirect to role-specific dashboard after successful login
+      const dashboardRoutes = {
+        candidate: "/candidate/dashboard",
+        employer: "/employer/dashboard",
+        admin: "/admin/dashboard",
+      };
+      navigate(dashboardRoutes[userData.role] || "/");
     } catch (error) {
       console.log("LOGIN ERROR:", error.response?.data);
 
