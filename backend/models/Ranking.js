@@ -16,24 +16,31 @@ const rankingSchema = new mongoose.Schema({
     ref: 'Resume',
     required: true
   },
-  resumeScore: { type: Number, default: 0 },
-  atsScore: { type: Number, default: 0 },
-  skillMatch: { type: Number, default: 0 },
-  experienceMatch: { type: Number, default: 0 },
-  educationMatch: { type: Number, default: 0 },
-  certificationScore: { type: Number, default: 0 },
-  communicationScore: { type: Number, default: 0 },
-  leadershipScore: { type: Number, default: 0 },
-  overallScore: { type: Number, default: 0 },
+  resumeScore: { type: Number, default: null },
+  atsScore: { type: Number, default: null },
+  skillMatch: { type: Number, default: null },
+  experienceMatch: { type: Number, default: null },
+  educationMatch: { type: Number, default: null },
+  certificationScore: { type: Number, default: null },
+  communicationScore: { type: Number, default: null },
+  leadershipScore: { type: Number, default: null },
+  projectQuality: { type: Number, default: null },
+  problemSolving: { type: Number, default: null },
+  softSkillsMatch: { type: Number, default: null },
+  confidenceScore: { type: Number, default: null },
+  overallScore: { type: Number, default: null },
   rank: { type: Number, default: 0 },
   recommendation: { type: String, default: '' },
+  rankingReason: { type: String, default: '' },
   strengths: [{ type: String }],
   weaknesses: [{ type: String }],
   missingSkills: [{ type: String }],
   recommendations: [{ type: String }],
+  improvementSuggestions: [{ type: String }],
+  atsSuggestions: [{ type: String }],
   status: {
     type: String,
-    enum: ['analyzed', 'shortlisted', 'rejected'],
+    enum: ['analyzed', 'shortlisted', 'rejected', 'ai_unavailable'],
     default: 'analyzed'
   },
   aiMetadata: {
@@ -43,9 +50,10 @@ const rankingSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// One ranking entry per candidate per job
+// Compound indexes for performance
 rankingSchema.index({ job: 1, candidate: 1 }, { unique: true });
 rankingSchema.index({ job: 1, rank: 1 });
+rankingSchema.index({ job: 1, overallScore: -1 });
+rankingSchema.index({ candidate: 1, createdAt: -1 });
 
 export default mongoose.model('Ranking', rankingSchema);
-

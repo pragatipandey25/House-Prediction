@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
-import upload from '../middleware/uploadMiddleware.js';
+import upload, { validateFileIntegrity } from '../middleware/uploadMiddleware.js';
 import { protect, authorizeRoles } from '../middleware/authMiddleware.js';
 import validateRequest from '../middleware/validateRequest.js';
 import {
@@ -18,11 +18,12 @@ const router = express.Router();
 // All routes require authentication
 router.use(protect);
 
-// Upload resume - candidate only
+// Upload resume - candidate only (with magic byte validation)
 router.post(
   '/upload',
   authorizeRoles('candidate'),
   upload.single('resume'),
+  validateFileIntegrity,
   uploadResume
 );
 

@@ -117,7 +117,7 @@ export const getJobById = async (req, res) => {
   }
 };
 
-// @desc    Update job
+// @desc    Update job (with mass assignment protection)
 // @route   PUT /api/jobs/:id
 export const updateJob = async (req, res) => {
   try {
@@ -131,9 +131,24 @@ export const updateJob = async (req, res) => {
       return res.status(403).json({ message: 'Not authorized' });
     }
 
+    // Whitelist allowed fields to prevent mass assignment attacks
+    const allowedFields = [
+      'title', 'description', 'responsibilities', 'requirements',
+      'preferredSkills', 'requiredSkills', 'experience', 'minimumExperience',
+      'education', 'requiredEducation', 'employmentType', 'salary',
+      'location', 'company', 'deadline', 'status'
+    ];
+
+    const updateData = {};
+    for (const field of allowedFields) {
+      if (req.body[field] !== undefined) {
+        updateData[field] = req.body[field];
+      }
+    }
+
     const updatedJob = await Job.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      { $set: updateData },
       { new: true, runValidators: true }
     );
 
@@ -193,4 +208,3 @@ export const closeJob = async (req, res) => {
     return res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-

@@ -5,12 +5,18 @@ import User from '../models/User.js';
 import { analyzeResumeWithJobDetails } from './aiService.js';
 
 /**
- * Calculate overall score using weighted formula
- * Resume Score: 40%
- * Skill Match: 30%
- * Experience Match: 15%
- * Education Match: 10%
+ * Calculate overall score using improved weighted formula
+ * Resume Score: 30%
+ * Skill Match: 25%
+ * Experience Match: 12%
+ * Education Match: 8%
  * Certification Score: 5%
+ * Project Quality: 5%
+ * Leadership: 3%
+ * Communication: 2%
+ * ATS Score: 3%
+ * Soft Skills: 2%
+ * Confidence: 5%
  */
 function calculateOverallScore(scores) {
   const {
@@ -18,18 +24,30 @@ function calculateOverallScore(scores) {
     skillMatch = 0,
     experienceMatch = 0,
     educationMatch = 0,
-    certificationScore = 0
+    certificationScore = 0,
+    projectQuality = 0,
+    leadershipScore = 0,
+    communicationScore = 0,
+    atsScore = 0,
+    softSkillsMatch = 0,
+    confidenceScore = 0
   } = scores;
 
   const overall = Math.round(
-    (resumeScore * 0.40) +
-    (skillMatch * 0.30) +
-    (experienceMatch * 0.15) +
-    (educationMatch * 0.10) +
-    (certificationScore * 0.05)
+    (resumeScore * 0.30) +
+    (skillMatch * 0.25) +
+    (experienceMatch * 0.12) +
+    (educationMatch * 0.08) +
+    (certificationScore * 0.05) +
+    (projectQuality * 0.05) +
+    (leadershipScore * 0.03) +
+    (communicationScore * 0.02) +
+    (atsScore * 0.03) +
+    (softSkillsMatch * 0.02) +
+    (confidenceScore * 0.05)
   );
 
-  return Math.min(overall, 100);
+  return Math.min(Math.max(overall, 0), 100);
 }
 
 /**
@@ -104,13 +122,56 @@ export async function analyzeAndRankCandidates(jobId) {
       // Analyze with Gemini AI
       const analysis = await analyzeResumeWithJobDetails(resumeData, job);
 
-      // Calculate overall score using the backend formula
+      // Check if AI returned an error — show null scores instead of fake defaults
+      if (analysis.recommendation === 'AI analysis unavailable') {
+        results.push({
+          candidateId: candidate._id,
+          candidateName: candidate.name,
+          candidateEmail: candidate.email,
+          resumeId: resumeDoc._id,
+          resumeOriginalName: resumeDoc.originalName,
+          resumeFileUrl: resumeDoc.fileUrl,
+          resumeScore: null,
+          atsScore: null,
+          skillMatch: null,
+          experienceMatch: null,
+          educationMatch: null,
+          certificationScore: null,
+          communicationScore: null,
+          leadershipScore: null,
+          projectQuality: null,
+          problemSolving: null,
+          softSkillsMatch: null,
+          confidenceScore: null,
+          overallScore: null,
+          rank: 0,
+          recommendation: 'AI analysis unavailable',
+          rankingReason: analysis.rankingReason || 'AI service unavailable',
+          strengths: [],
+          weaknesses: [],
+          missingSkills: [],
+          recommendations: [],
+          improvementSuggestions: analysis.improvementSuggestions || [],
+          atsSuggestions: analysis.atsSuggestions || [],
+          aiMetadata: analysis._metadata || { model: '', analyzedAt: new Date(), promptVersion: '' },
+          aiError: analysis.aiError || null
+        });
+        continue;
+      }
+
+      // Calculate overall score using improved formula
       const overallScore = calculateOverallScore({
         resumeScore: analysis.resumeScore || 0,
         skillMatch: analysis.skillMatch || 0,
         experienceMatch: analysis.experienceMatch || 0,
         educationMatch: analysis.educationMatch || 0,
-        certificationScore: analysis.certificationScore || 0
+        certificationScore: analysis.certificationScore || 0,
+        projectQuality: analysis.projectQuality || 0,
+        leadershipScore: analysis.leadershipScore || 0,
+        communicationScore: analysis.communicationScore || 0,
+        atsScore: analysis.atsScore || 0,
+        softSkillsMatch: analysis.softSkillsMatch || 0,
+        confidenceScore: analysis.confidenceScore || 0
       });
 
       results.push({
@@ -128,12 +189,20 @@ export async function analyzeAndRankCandidates(jobId) {
         certificationScore: analysis.certificationScore || 0,
         communicationScore: analysis.communicationScore || 0,
         leadershipScore: analysis.leadershipScore || 0,
+        projectQuality: analysis.projectQuality || 0,
+        problemSolving: analysis.problemSolving || 0,
+        softSkillsMatch: analysis.softSkillsMatch || 0,
+        confidenceScore: analysis.confidenceScore || 0,
         overallScore,
+        rank: 0,
         recommendation: analysis.recommendation || 'Moderate',
+        rankingReason: analysis.rankingReason || '',
         strengths: analysis.strengths || [],
         weaknesses: analysis.weaknesses || [],
         missingSkills: analysis.missingSkills || [],
         recommendations: analysis.recommendations || [],
+        improvementSuggestions: analysis.improvementSuggestions || [],
+        atsSuggestions: analysis.atsSuggestions || [],
         aiMetadata: analysis._metadata || {
           model: '',
           analyzedAt: new Date(),
@@ -142,7 +211,6 @@ export async function analyzeAndRankCandidates(jobId) {
       });
     } catch (error) {
       console.error(`Failed to analyze resume for candidate ${resume._id}:`, error.message);
-      // Add with default scores so the candidate still appears in results
       const candidate = candidates.find(c => c._id.toString() === resume._id.toString());
       if (candidate) {
         results.push({
@@ -152,28 +220,41 @@ export async function analyzeAndRankCandidates(jobId) {
           resumeId: resume.resumeId,
           resumeOriginalName: resume.originalName,
           resumeFileUrl: resume.fileUrl,
-          resumeScore: 0,
-          atsScore: 0,
-          skillMatch: 0,
-          experienceMatch: 0,
-          educationMatch: 0,
-          certificationScore: 0,
-          communicationScore: 0,
-          leadershipScore: 0,
-          overallScore: 0,
-          recommendation: 'Not Recommended',
+          resumeScore: null,
+          atsScore: null,
+          skillMatch: null,
+          experienceMatch: null,
+          educationMatch: null,
+          certificationScore: null,
+          communicationScore: null,
+          leadershipScore: null,
+          projectQuality: null,
+          problemSolving: null,
+          softSkillsMatch: null,
+          confidenceScore: null,
+          overallScore: null,
+          rank: 0,
+          recommendation: 'AI analysis unavailable',
+          rankingReason: 'Error during AI analysis',
           strengths: [],
           weaknesses: [],
           missingSkills: [],
           recommendations: [],
+          improvementSuggestions: [],
+          atsSuggestions: [],
           aiMetadata: { model: '', analyzedAt: new Date(), promptVersion: '' }
         });
       }
     }
   }
 
-  // Sort by overall score descending and assign ranks
-  results.sort((a, b) => b.overallScore - a.overallScore);
+  // Sort by overall score descending (null scores go to bottom)
+  results.sort((a, b) => {
+    if (a.overallScore === null && b.overallScore === null) return 0;
+    if (a.overallScore === null) return 1;
+    if (b.overallScore === null) return -1;
+    return b.overallScore - a.overallScore;
+  });
   results.forEach((r, index) => {
     r.rank = index + 1;
   });
@@ -191,7 +272,7 @@ async function storeRankings(jobId, rankings) {
   // Delete existing rankings for this job
   await Ranking.deleteMany({ job: jobId });
 
-  // Create new ranking entries
+  // Create new ranking entries with all fields
   const rankingDocs = rankings.map(r => ({
     job: jobId,
     candidate: r.candidateId,
@@ -204,13 +285,20 @@ async function storeRankings(jobId, rankings) {
     certificationScore: r.certificationScore,
     communicationScore: r.communicationScore,
     leadershipScore: r.leadershipScore,
+    projectQuality: r.projectQuality,
+    problemSolving: r.problemSolving,
+    softSkillsMatch: r.softSkillsMatch,
+    confidenceScore: r.confidenceScore,
     overallScore: r.overallScore,
     rank: r.rank,
     recommendation: r.recommendation,
+    rankingReason: r.rankingReason || '',
     strengths: r.strengths,
     weaknesses: r.weaknesses,
     missingSkills: r.missingSkills,
     recommendations: r.recommendations,
+    improvementSuggestions: r.improvementSuggestions || [],
+    atsSuggestions: r.atsSuggestions || [],
     aiMetadata: r.aiMetadata
   }));
 
@@ -288,6 +376,18 @@ export async function getRankings(jobId, filters = {}) {
         valA = a.atsScore;
         valB = b.atsScore;
         break;
+      case 'communicationScore':
+        valA = a.communicationScore;
+        valB = b.communicationScore;
+        break;
+      case 'educationMatch':
+        valA = a.educationMatch;
+        valB = b.educationMatch;
+        break;
+      case 'confidenceScore':
+        valA = a.confidenceScore;
+        valB = b.confidenceScore;
+        break;
       case 'newest':
         valA = a.createdAt?.getTime() || 0;
         valB = b.createdAt?.getTime() || 0;
@@ -323,4 +423,3 @@ export async function updateRankingStatus(rankingId, status) {
   await ranking.save();
   return ranking;
 }
-

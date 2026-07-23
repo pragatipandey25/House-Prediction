@@ -1,19 +1,16 @@
-# Fix Role-Based Authentication - Progress Tracker
+# Fix: "Cannot set property query of #<IncomingMessage> which has only a getter"
+
+## Root Cause
+
+Express 5 defines `req.query`, `req.body`, and `req.params` as read-only getter properties. Two pieces of code were attempting to reassign these using `=`:
+
+1. **Our custom middleware** `backend/middleware/sanitizeMiddleware.js` — Fixed with `Object.defineProperty()`
+2. **npm package** `express-mongo-sanitize` (used in `server.js`) — Removed; our custom middleware handles the same functionality correctly.
 
 ## Steps
 
-### Backend
-
-- [x] Step 1: Update `authController.js` - Fix login response to include `message`, `token`, and `user` object
-- [x] Step 2: Update `server.js` - Add default admin account seeding on startup
-
-### Frontend
-
-- [x] Step 3: Update `Login.jsx` - Remove role dropdown, add LoadingSpinner, fix error display, update response handling
-- [x] Step 4: Update `AppRoutes.jsx` - Change dashboard route paths (dash format)
-- [x] Step 5: Update `ProtectedRoute.jsx` - Align redirect map with new paths
-- [x] Step 6: Update `Navbar.jsx` - Fix nav links and logo redirect to use dash paths
-
-### Verification
-
-- [x] Step 7: All changes complete - Ready for testing
+- [x] 1. Analyze backend files and identify root cause
+- [x] 2. Fix `sanitizeMiddleware.js` — Replace `=` assignments with `Object.defineProperty()`
+- [x] 3. Remove `express-mongo-sanitize` from `server.js` (import + middleware usage)
+- [x] 4. Update misleading console.log message
+- [x] 5. Verify no remaining references
