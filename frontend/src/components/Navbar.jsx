@@ -47,7 +47,7 @@ const Navbar = () => {
               }
               className="flex items-center gap-2"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-9 h-9 rounded-xl bg-linear-to-br from-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
                 AI
               </div>
               <span className="font-bold text-gray-800 text-lg hidden sm:block">
@@ -72,10 +72,10 @@ const Navbar = () => {
           {/* User Menu */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-indigo-50 rounded-lg">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-7 h-7 rounded-full bg-linear-to-br from-indigo-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
                 {user.name?.charAt(0)?.toUpperCase() || "U"}
               </div>
-              <span className="text-sm font-medium text-gray-700 max-w-[100px] truncate">
+              <span className="text-sm font-medium text-gray-700 max-w-25 truncate">
                 {user.name}
               </span>
             </div>
