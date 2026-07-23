@@ -77,7 +77,7 @@ const RankingCard = ({
       <div className="flex items-start gap-4">
         {/* Rank Badge */}
         <div
-          className={`w-14 h-14 rounded-2xl ${badge.bg} flex items-center justify-center text-2xl font-bold text-white shadow-lg flex-shrink-0`}
+          className={`w-14 h-14 rounded-2xl ${badge.bg} flex items-center justify-center text-2xl font-bold text-white shadow-lg shrink-0`}
         >
           {badge.emoji}
         </div>

@@ -6,10 +6,16 @@
 
 Automating Resume Screening, Candidate Evaluation, and Hiring Decisions using MERN Stack and Google Gemini AI
 
-![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
-![NodeJS](https://img.shields.io/badge/Backend-Node.js-green?logo=node.js)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-brightgreen?logo=mongodb)
-![Gemini](https://img.shields.io/badge/AI-Google%20Gemini-orange)
+![React](https://img.shields.io/badge/React_19-20232A?logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite_8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?logo=tailwindcss&logoColor=white)
+![NodeJS](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express_5-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose_9-880000?logo=mongoose&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini_2.0_Flash-4285F4?logo=googlegemini&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?logo=jsonwebtokens&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-22B5BF?logo=recharts&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
@@ -19,25 +25,29 @@ Automating Resume Screening, Candidate Evaluation, and Hiring Decisions using ME
 
 ## 📖 Overview
 
-The **AI-Driven Resume Screening & Candidate Ranking System** is a full-stack recruitment platform designed to automate the hiring workflow for HR teams.
+The **AI-Driven Resume Screening & Candidate Ranking System** is a full-stack recruitment platform designed to automate the hiring workflow for HR teams, employers, and administrators.
 
 Instead of manually reviewing hundreds of resumes, employers can:
 
-✅ Create job postings
+✅ Create & manage job postings with detailed requirements
 
-✅ Upload resumes in bulk
+✅ Upload resumes in bulk (PDF/DOCX with integrity validation)
 
-✅ Receive AI-generated candidate scores
+✅ Receive AI-generated candidate scores across 11 dimensions
 
-✅ View skill match analysis
+✅ View detailed skill match analysis with missing skill detection
 
-✅ Detect potential bias indicators
+✅ Detect potential bias indicators and ATS optimization suggestions
 
-✅ Rank candidates automatically
+✅ Rank candidates automatically using a comprehensive scoring engine
 
-✅ Export shortlisted candidates
+✅ Shortlist, reject, and manage candidates
 
-The platform leverages **Google Gemini AI** to analyze resumes against job requirements and generate explainable candidate rankings.
+✅ Export shortlisted candidates as CSV reports
+
+✅ Access an analytics dashboard with visual charts
+
+The platform leverages **Google Gemini 2.0 Flash AI** to deeply analyze resumes against job requirements and generate explainable candidate rankings with confidence scoring.
 
 ---
 
@@ -46,11 +56,12 @@ The platform leverages **Google Gemini AI** to analyze resumes against job requi
 Recruiters often spend hours manually reviewing resumes, leading to:
 
 - Time-consuming hiring processes
-- Human bias in screening
+- Human bias in screening decisions
 - Difficulty handling large applicant volumes
-- Inconsistent candidate evaluation
+- Inconsistent candidate evaluation criteria
+- Lack of explainable hiring recommendations
 
-This project addresses these challenges through AI-powered semantic matching and automated ranking.
+This project addresses these challenges through AI-powered semantic matching, multi-dimensional scoring, and automated ranking with transparent reasoning.
 
 ---
 
@@ -59,87 +70,125 @@ This project addresses these challenges through AI-powered semantic matching and
 ## 👨‍💼 Employer Portal
 
 - Secure Registration & Login
-- JWT Authentication
-- Create & Manage Job Posts
-- Define Required Skills & Experience
-- Upload Multiple Resumes
-- View Ranked Candidates
-- Shortlist Candidates
-- Reject Candidates
+- JWT Authentication with Role-Based Access Control
+- Create & Manage Job Posts (edit, close, reopen)
+- Define Required Skills, Preferred Skills, Experience & Education
+- Upload Multiple Resumes (with magic byte validation)
+- View Ranked Candidates with AI Analysis
+- Shortlist & Reject Candidates
 - Export CSV Reports
+- View Detailed Analysis with 11 Scoring Dimensions
 
 ---
 
 ## 👨‍🎓 Candidate Portal
 
-- Candidate Registration
-- Secure Login
-- View Applied Jobs
-- Track Application Status
-- View AI Match Scores
+- Candidate Registration & Secure Login
+- Upload & Manage Resumes
+- Browse Available Jobs
+- Apply to Jobs
+- View Application Status (Pending, Shortlisted, Rejected)
+- Track AI Match Scores on Applications
+
+---
+
+## 🛡️ Admin Portal
+
+- System Overview Dashboard with Analytics
+- View All Users (employers, candidates, admins)
+- Manage All Jobs Across System
+- View All Applications with AI Scores
+- Delete Users
+- Bar Chart Visualization (Jobs Per Employer)
+- Recent Activity Tracking
 
 ---
 
 ## 🤖 AI Resume Analysis
 
-Google Gemini AI performs:
+Google Gemini 2.0 Flash performs deep multi-dimensional analysis:
 
-- Resume Parsing
-- Skill Extraction
-- Missing Skill Identification
-- Experience Analysis
-- Match Score Generation
-- Score Explanation
-- Bias Indicator Detection
+| Dimension              | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| 📄 Resume Score        | Overall resume quality, completeness & formatting    |
+| 🤖 ATS Score           | Resume optimization for Applicant Tracking Systems   |
+| 🛠️ Skill Match         | Technical skills alignment with job requirements     |
+| 💬 Communication       | Resume clarity, structure & language quality         |
+| 💼 Experience Match    | Relevance of work experience to job responsibilities |
+| 🎓 Education Match     | Educational background relevance to the role         |
+| 📜 Certification Score | Value & relevance of listed certifications           |
+| 👑 Leadership Score    | Evidence of leadership, initiative & mentoring       |
+| 🏗️ Project Quality     | Complexity & relevance of listed projects            |
+| 🧠 Problem Solving     | Analytical thinking & technical challenges           |
+| 🤝 Soft Skills Match   | Teamwork, communication & adaptability evidence      |
+
+Additional AI outputs:
+
+- **Confidence Score** — How confident the AI is in its assessment
+- **Missing Skills** — Important skills the candidate lacks for the role
+- **Strengths & Weaknesses** — Top 3-5 strengths and 2-3 weaknesses
+- **Recommendations** — Actionable suggestions for the candidate
+- **Improvement Suggestions** — Resume-specific improvement tips
+- **ATS Suggestions** — Optimization tips for better parsing
+- **Ranking Reason** — Explainable justification for the ranking
+- **Recommendation** — "Highly Recommended", "Recommended", "Moderate", or "Not Recommended"
+
+Built-in retry mechanism with exponential backoff (3 retries) ensures reliability.
 
 ---
 
 ## 📊 Candidate Ranking Engine
 
-Candidates are ranked based on:
-
-- Skill Match Percentage
-- Experience Relevance
-- Missing Skills Analysis
-- Overall Match Score
+Candidates are ranked based on a weighted composite of all 11 scoring dimensions:
 
 ```text
-Rank #1 → Best Match
-Rank #2 → Second Best Match
-Rank #3 → Third Best Match
+Scoring Guidelines:
+  90-100: Exceptional — exceeds requirements significantly
+  75-89:  Strong — meets and partially exceeds requirements
+  50-74:  Adequate — meets minimum requirements
+  25-49:  Below Average — partially meets requirements
+  0-24:   Poor — does not meet requirements
+
+Rank #1 🥇 → Best Match (Highest Overall Score)
+Rank #2 🥈 → Second Best Match
+Rank #3 🥉 → Third Best Match
 ```
 
-Automatic re-ranking occurs whenever new resumes are uploaded.
+Automatic re-ranking occurs whenever new resumes are uploaded and analyzed.
 
 ---
 
 # 🏗️ System Architecture
 
 ```text
-┌────────────────────┐
-│ Employer Browser   │
-└──────────┬─────────┘
-           │ HTTPS
-           ▼
-┌────────────────────┐
-│ React Frontend     │
-│ (SPA)              │
-└──────────┬─────────┘
-           │ REST API
-           ▼
-┌────────────────────┐
-│ Node.js + Express  │
-│ Backend API        │
-└───────┬───────┬────┘
-        │       │
-        ▼       ▼
-
- ┌───────────┐ ┌──────────────┐
- │ MongoDB   │ │ Gemini API   │
- └───────────┘ └──────────────┘
+┌─────────────────────────────────────┐
+│         Browser (React SPA)         │
+│  ┌─────────┐ ┌──────────┐          │
+│  │Employer │ │Candidate │          │
+│  │ Portal  │ │  Portal  │  Admin   │
+│  └────┬────┘ └────┬─────┘  Portal  │
+│       │           │         │       │
+└───────┼───────────┼─────────┼───────┘
+        │           │         │
+        ▼           ▼         ▼
+┌─────────────────────────────────────┐
+│     REST API (Node.js + Express 5)  │
+│  ┌──────────┐ ┌──────────────────┐  │
+│  │ Auth     │ │ Security Stack   │  │
+│  │ JWT/RBAC │ │ Helmet · CORS    │  │
+│  └──────────┘ │ Rate Limiter     │  │
+│               │ Sanitizer · HPP  │  │
+│               └──────────────────┘  │
+└───────┬───────────────────┬─────────┘
+        │                   │
+        ▼                   ▼
+┌──────────────┐  ┌──────────────────┐
+│   MongoDB    │  │  Google Gemini   │
+│  (Mongoose)  │  │  2.0 Flash API   │
+└──────────────┘  └──────────────────┘
 ```
 
-The frontend never directly communicates with Gemini API. All AI processing is securely handled by the backend.
+The frontend never communicates directly with the Gemini API. All AI processing is securely handled by the backend with retry logic and error handling.
 
 ---
 
@@ -147,36 +196,60 @@ The frontend never directly communicates with Gemini API. All AI processing is s
 
 ## Frontend
 
-- React.js
-- Tailwind CSS
-- React Router v6
-- Axios
-- Context API
+- **React 19** — UI library
+- **Vite 8** — Build tool & dev server
+- **Tailwind CSS v4** — Utility-first styling
+- **React Router v6** — Client-side routing
+- **Axios** — HTTP client
+- **Context API** — State management
+- **Recharts** — Analytics charts & graphs
+- **React Toastify** — Notification toasts
 
 ## Backend
 
-- Node.js
-- Express.js
-- JWT Authentication
-- Multer
+- **Node.js** — Runtime environment
+- **Express 5** — Web framework
+- **JWT** — Authentication tokens
+- **Bcrypt** — Password hashing
+- **Multer** — File upload handling
+- **Mammoth** — DOCX text extraction
+- **pdfjs-dist** — PDF text extraction
+- **express-rate-limit** — Rate limiting
+- **express-validator** — Request validation
+- **Helmet** — Security headers
+- **hpp** — HTTP parameter pollution protection
 
 ## Database
 
-- MongoDB
-- Mongoose ODM
+- **MongoDB** — NoSQL database
+- **Mongoose 9** — ODM with schemas & validation
 
 ## AI Layer
 
-- Google Gemini API
-- Gemini 1.5 Flash
+- **Google Gemini API**
+- **Gemini 2.0 Flash** — Fast, efficient model
+- **Prompt Versioning** (v3.0)
+- **Retry Logic** — Exponential backoff (3 retries)
+- **Response Parsing** — Robust JSON extraction from AI output
 
 ## Security
 
-- JWT Authentication
-- Bcrypt Password Hashing
-- Helmet.js
-- Role-Based Access Control (RBAC)
-- File Validation & Sanitization
+- JWT Authentication with Role-Based Access Control (RBAC)
+- Bcrypt Password Hashing (salt rounds: 10)
+- Helmet Security Headers
+- CORS with whitelisted origins
+- Rate Limiting (100 req/15min API, 10 req/15min auth)
+- Custom Request Sanitization (NoSQL injection + XSS prevention)
+- Express 5 compatible — `Object.defineProperty()` reassignment
+- HTTP Parameter Pollution Protection (hpp)
+- Body Size Limiting (10kb)
+- File Upload Protection:
+  - PDF & DOCX only (MIME type + extension check)
+  - Magic Byte Validation (file integrity verification)
+  - UUID-based File Names (prevents overwrites)
+  - File Size Limit (5 MB)
+  - Executable File Blocking
+- Environment Variable Protection
 
 ---
 
@@ -185,20 +258,93 @@ The frontend never directly communicates with Gemini API. All AI processing is s
 ```bash
 AI-Resume-Screening-System/
 │
-├── client/
+├── frontend/                          # React + Vite frontend
+│   ├── public/                        # Static assets
 │   ├── src/
-│   ├── pages/
-│   ├── components/
-│   ├── context/
-│   └── layouts/
+│   │   ├── components/                # Reusable UI components
+│   │   │   ├── FilterBar.jsx
+│   │   │   ├── JobCard.jsx
+│   │   │   ├── LoadingSpinner.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── ProgressBar.jsx
+│   │   │   ├── ProtectedRoute.jsx
+│   │   │   ├── RankingCard.jsx
+│   │   │   ├── RankingTable.jsx
+│   │   │   ├── ScoreCard.jsx
+│   │   │   └── SkeletonLoader.jsx
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   ├── pages/
+│   │   │   ├── AdminDashboard.jsx     # Analytics with Recharts
+│   │   │   ├── AnalysisDetail.jsx
+│   │   │   ├── BrowseJobs.jsx
+│   │   │   ├── CandidateDashboard.jsx
+│   │   │   ├── CreateJob.jsx
+│   │   │   ├── EditJob.jsx
+│   │   │   ├── EmployerDashboard.jsx
+│   │   │   ├── JobAnalysis.jsx
+│   │   │   ├── JobDetail.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── MyApplications.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── ResumeUpload.jsx
+│   │   │   └── ViewJobs.jsx
+│   │   ├── routes/
+│   │   │   └── AppRoutes.jsx
+│   │   └── services/
+│   │       ├── adminService.js
+│   │       ├── analysisService.js
+│   │       ├── api.js
+│   │       ├── applicationService.js
+│   │       ├── authService.js
+│   │       ├── dashboardService.js
+│   │       ├── jobService.js
+│   │       └── resumeService.js
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── eslint.config.js
+│   └── package.json
 │
-├── server/
+├── backend/                           # Node.js + Express API
+│   ├── config/
+│   │   └── db.js                      # MongoDB connection
 │   ├── controllers/
-│   ├── routes/
+│   │   ├── analysisController.js
+│   │   ├── applicationController.js
+│   │   ├── authController.js
+│   │   ├── dashboardController.js
+│   │   ├── jobController.js
+│   │   └── resumeController.js
 │   ├── middleware/
-│   ├── services/
+│   │   ├── authMiddleware.js          # JWT verification + RBAC
+│   │   ├── errorMiddleware.js
+│   │   ├── sanitizeMiddleware.js      # NoSQL + XSS prevention
+│   │   ├── uploadMiddleware.js        # Multer + magic byte validation
+│   │   └── validateRequest.js         # express-validator
 │   ├── models/
-│   └── uploads/
+│   │   ├── Application.js
+│   │   ├── Job.js
+│   │   ├── Ranking.js
+│   │   ├── Resume.js
+│   │   └── User.js                    # Roles: employer, candidate, admin
+│   ├── routes/
+│   │   ├── adminRoutes.js
+│   │   ├── analysisRoutes.js
+│   │   ├── applicationRoutes.js
+│   │   ├── authRoutes.js
+│   │   ├── dashboardRoutes.js
+│   │   ├── jobRoutes.js
+│   │   └── resumeRoutes.js
+│   ├── services/
+│   │   ├── aiService.js              # Gemini 2.0 Flash integration
+│   │   ├── rankingService.js
+│   │   └── resumeParser.js           # PDF & DOCX parsing
+│   ├── utils/
+│   │   ├── analyticsEngine.js
+│   │   └── rankingEngine.js
+│   ├── uploads/                       # Resume file storage
+│   ├── server.js                      # Entry point with security stack
+│   └── package.json
 │
 ├── screenshots/
 ├── docs/
@@ -210,62 +356,104 @@ AI-Resume-Screening-System/
 
 # 🔐 Security Features
 
-### Authentication
+### Authentication & Authorization
 
-- JWT-based Authentication
-- Role-based Authorization
-- Password Hashing using Bcrypt
+- JWT-based Authentication with configurable expiry
+- Role-Based Access Control (RBAC) — `employer`, `candidate`, `admin`
+- Password Hashing using Bcrypt (salt rounds: 10)
+- Rate-limited auth routes (10 requests per 15 minutes)
 
 ### File Upload Protection
 
-- PDF & DOCX Only
-- Magic Byte Validation
-- UUID-based File Names
-- File Size Limit (5 MB)
-- Executable File Blocking
+- PDF & DOCX Only — MIME type + extension verification
+- Magic Byte Validation — Reads file header bytes to verify actual format
+- Extension-Actual Content Matching — Prevents disguised executables
+- UUID-based File Names — Prevents overwrite attacks
+- File Size Limit — 5 MB cap
+- Invalid File Cleanup — Automatically removes failed uploads
 
 ### API Security
 
-- Protected Routes
-- HTTPS Communication
-- Helmet Security Headers
-- Environment Variable Protection
+- **Helmet.js** — Secure HTTP headers
+- **CORS** — Whitelisted origins only
+- **Rate Limiting** — 100 requests per 15 minutes per IP
+- **Custom Sanitizer** — Strips MongoDB operators (`$`) and prevents NoSQL injection
+- **Express 5 Compatible** — Uses `Object.defineProperty()` to handle read-only request properties
+- **hpp** — HTTP Parameter Pollution protection
+- **Body Size Limit** — 10kb max for JSON/URL-encoded bodies
+- **express-validator** — Input validation on all routes
+- Environment Variable Protection — No secrets in source code
 
 ---
 
 # 🔄 Workflow
 
 ```text
-Employer Creates Job
-          │
-          ▼
-Upload Candidate Resumes
-          │
-          ▼
-Resume Text Extraction
-          │
-          ▼
-Gemini AI Analysis
-          │
-          ▼
-Skill Matching & Scoring
-          │
-          ▼
-Candidate Ranking
-          │
-          ▼
-Shortlist / Reject
-          │
-          ▼
-Export CSV Report
+                    ┌──────────────┐
+                    │  User Signs  │
+                    │     Up       │
+                    └──────┬───────┘
+                           │
+                    ┌──────▼───────┐
+                    │ Role Select  │
+                    └──┬───────┬───┘
+                       │       │
+              ┌────────▼──┐ ┌──▼─────────┐
+              │  Employer  │ │  Candidate  │
+              └─────┬─────┘ └──────┬──────┘
+                    │              │
+        ┌───────────▼──────┐      │
+        │  Create Job Post │      │
+        └───────────┬──────┘      │
+                    │              │
+        ┌───────────▼──────┐      │
+        │ Upload Resumes   │      │
+        └───────────┬──────┘      │
+                    │              │
+        ┌───────────▼──────┐      │
+        │  AI Analysis     │      │
+        │  (Gemini 2.0)    │      │
+        └───────────┬──────┘      │
+                    │              │
+        ┌───────────▼──────┐      │
+        │ Skill Matching & │      │
+        │  Scoring (11D)   │      │
+        └───────────┬──────┘      │
+                    │              │
+        ┌───────────▼──────┐      │
+        │    Ranking       │      │
+        └───────────┬──────┘      │
+                    │              │
+        ┌───────────▼──────┐      │
+        │ Shortlist/Reject │◄─────┤ Apply to Jobs
+        └───────────┬──────┘      │
+                    │              │
+        ┌───────────▼──────┐      │
+        │ Export CSV      │      │
+        │ Report          │      │
+        └──────────────────┘      │
+                                  │
+                    ┌─────────────▼───┐
+                    │  Admin Dashboard│
+                    │  (Analytics)    │
+                    └─────────────────┘
 ```
 
+---
+
 # 🚀 Installation
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- MongoDB (local or Atlas)
+- Google Gemini API Key
 
 ## Clone Repository
 
 ```bash
-git clone https://github.com/Harshal10k/AI-Driven-Resume-Screening-and-Candidate-Ranking-System.git
+git clone https://github.com/pragatipandey454/AI-Driven-Resume-Screening-and-Candidate-Ranking-System.git
+cd AI-Driven-Resume-Screening-and-Candidate-Ranking-System
 ```
 
 ---
@@ -273,40 +461,58 @@ git clone https://github.com/Harshal10k/AI-Driven-Resume-Screening-and-Candidate
 ## Backend Setup
 
 ```bash
-cd server
+cd backend
 
 npm install
 
 npm run dev
 ```
+
+The server will start on `http://localhost:5000` (or your configured PORT).
 
 ---
 
 ## Frontend Setup
 
 ```bash
-cd client
+cd frontend
 
 npm install
 
 npm run dev
 ```
 
+The frontend will start on `http://localhost:5173`.
+
 ---
 
 ## Environment Variables
 
-Create a `.env` file inside the server folder:
+Create a `.env` file inside the `backend/` folder:
 
 ```env
 PORT=5000
 
 MONGO_URI=your_mongodb_connection_string
 
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_jwt_secret_key
 
 GEMINI_API_KEY=your_google_gemini_api_key
 ```
+
+---
+
+## Default Admin Account
+
+On first run, the system automatically seeds a default admin account:
+
+| Field        | Value                        |
+| ------------ | ---------------------------- |
+| **Email**    | `pragatipandey454@gmail.com` |
+| **Password** | `Admin@123`                  |
+| **Role**     | `admin`                      |
+
+> ⚠️ **Security Note:** Change the default admin password immediately after first login.
 
 ---
 
@@ -314,76 +520,93 @@ GEMINI_API_KEY=your_google_gemini_api_key
 
 ### Authentication Module
 
-- User Registration
-- User Login
-- JWT Protection
-- Password Hashing
-- RBAC Authorization
+- User Registration (employer, candidate)
+- User Login with JWT token generation
+- JWT Protection middleware
+- Password Hashing with Bcrypt
+- RBAC Authorization (employer, candidate, admin)
 
 ### Job Management
 
-- Create Job Posting
+- Create Job Posting (title, description, skills, experience, education, salary)
+- Edit Job Posting
 - View Job Details
-- Manage Job Status
+- Manage Job Status (active/closed)
 - List Employer Jobs
+- Browse All Jobs (candidate view)
 
 ### Resume Processing
 
-- Bulk Resume Upload
-- PDF Parsing
-- DOCX Parsing
-- File Validation
+- Resume Upload (employer uploads for candidates, candidate uploads own)
+- PDF Text Extraction using pdfjs-dist
+- DOCX Text Extraction using mammoth
+- File Validation (MIME type, extension, magic bytes)
+- Magic Byte Integrity Verification
 
-### AI Scoring
+### AI Scoring (11 Dimensions)
 
-- Gemini Integration
-- Match Score Generation
-- Skill Extraction
-- Score Explanation
-- Bias Detection
+- Gemini 2.0 Flash Integration
+- Multi-dimensional Match Score Generation
+- Skill Extraction & Gap Analysis
+- Score Explanation & Ranking Reason
+- Recommendation Generation
+- ATS Optimization Suggestions
+- Confidence Scoring
+- Automatic Retry with Exponential Backoff
 
 ### Candidate Management
 
+- View Ranked Candidates
 - Shortlist Candidate
 - Reject Candidate
-- Filter Candidates
-- Export CSV
+- Filter Candidates by Status
+- Export CSV Report
+- View AI Analysis Detail
+
+### Admin Dashboard
+
+- System Overview with Stats Cards (users, jobs, applications, admins)
+- Bar Chart Visualization (Jobs Per Employer using Recharts)
+- User Management (view, filter, delete)
+- Job Management (view all jobs system-wide)
+- Application Management (view with AI scores)
+- Recent Activity Tracking
 
 ---
 
 # 🔮 Future Enhancements
 
-- Email Notifications
-- Interview Scheduling
-- ATS Integration
-- Resume Improvement Suggestions
-- AI Interview Question Generator
-- Analytics Dashboard
-- Multi-Language Resume Support
-- Advanced Bias Detection
-
-
+- Email Notifications (application received, shortlisted, rejected)
+- Interview Scheduling with Calendar Integration
+- ATS (Applicant Tracking System) Integration API
+- Resume Improvement Suggestions with AI feedback
+- AI Interview Question Generator based on job requirements
+- Multi-Language Resume Support (Hindi, Spanish, French, etc.)
+- Advanced Bias Detection & Fairness Metrics
+- Bulk Candidate CSV Import
+- PDF Report Generation for Hiring Summaries
+- WebSocket-based Real-time Analysis Progress
 
 ---
 
 # 🤝 Contributing
 
-Contributions are welcome!
+Contributions are welcome! Here's how you can help:
 
 ```bash
-# Fork Repository
+# Fork the Repository
 
-# Create Branch
-git checkout -b feature-name
+# Create Feature Branch
+git checkout -b feature/your-feature-name
 
 # Commit Changes
-git commit -m "Added New Feature"
+git commit -m "feat: Add your feature description"
 
-# Push Changes
-git push origin feature-name
+# Push to Branch
+git push origin feature/your-feature-name
 ```
 
-Create a Pull Request 🚀
+Then create a Pull Request with a clear description of your changes.
 
 ---
 
@@ -391,18 +614,20 @@ Create a Pull Request 🚀
 
 If you found this project useful:
 
-⭐ Star the Repository
+⭐ **Star** the Repository
 
-🍴 Fork the Repository
+🍴 **Fork** the Repository
 
-📢 Share with Others
+📢 **Share** with Others
 
 ---
 
 <div align="center">
 
-### Made by Pragati Pandey
+### Built with ❤️ by Pragati Pandey
 
-AI-Driven Resume Screening & Candidate Ranking System
+**AI-Driven Resume Screening & Candidate Ranking System**
+
+Empowering Smarter Hiring Decisions with AI 🚀
 
 </div>
