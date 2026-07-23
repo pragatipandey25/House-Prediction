@@ -2,6 +2,45 @@ import { useState } from "react";
 import { registerUser } from "../services/authService";
 import { useNavigate, Link } from "react-router-dom";
 
+const roleContent = {
+  candidate: {
+    heading: "Create your candidate account",
+    description:
+      "Create your candidate account and get discovered by recruiters using AI-powered resume screening.",
+    features: [
+      "✓ Create Candidate Profile",
+      "✓ Upload Resume",
+      "✓ Apply To Jobs",
+      "✓ Track Applications",
+      "✓ Get Ranked By AI",
+    ],
+  },
+  employer: {
+    heading: "Create your employer account",
+    description:
+      "Post jobs, review AI-ranked candidates, and make data-driven hiring decisions.",
+    features: [
+      "✓ Post Job Listings",
+      "✓ AI Candidate Ranking",
+      "✓ Resume Parsing",
+      "✓ Hiring Analytics",
+      "✓ Bias Detection",
+    ],
+  },
+  admin: {
+    heading: "Create your admin account",
+    description:
+      "Manage users, monitor platform activity, and oversee all job applications.",
+    features: [
+      "✓ User Management",
+      "✓ Job Oversight",
+      "✓ Application Monitoring",
+      "✓ Platform Analytics",
+      "✓ System Administration",
+    ],
+  },
+};
+
 const Register = () => {
   const navigate = useNavigate();
 
@@ -11,6 +50,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    role: "candidate",
   });
 
   const handleChange = (e) => {
@@ -38,6 +78,9 @@ const Register = () => {
     }
   };
 
+  const currentRoleContent =
+    roleContent[formData.role] || roleContent.candidate;
+
   return (
     <div className="min-h-screen flex">
       {/* Left Section */}
@@ -51,16 +94,13 @@ const Register = () => {
         <h2 className="text-3xl font-semibold mb-4">CVAnalyzer</h2>
 
         <p className="text-lg text-blue-100 mb-8 max-w-md">
-          Create your candidate account and get discovered by recruiters using
-          AI-powered resume screening.
+          {currentRoleContent.description}
         </p>
 
         <div className="space-y-3 text-lg">
-          <p>✓ Create Candidate Profile</p>
-          <p>✓ Upload Resume</p>
-          <p>✓ Apply To Jobs</p>
-          <p>✓ Track Applications</p>
-          <p>✓ Get Ranked By AI</p>
+          {currentRoleContent.features.map((feature, idx) => (
+            <p key={idx}>{feature}</p>
+          ))}
         </div>
       </div>
 
@@ -72,7 +112,7 @@ const Register = () => {
         >
           <h2 className="text-5xl font-bold text-slate-900 mb-2">Register</h2>
 
-          <p className="text-slate-500 mb-8">Create your candidate account</p>
+          <p className="text-slate-500 mb-8">{currentRoleContent.heading}</p>
 
           <input
             type="text"
@@ -100,14 +140,31 @@ const Register = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-4 border rounded-xl mb-6 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-4 border rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
           />
+
+          {/* Role Selector */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              I want to register as
+            </label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-slate-900"
+            >
+              <option value="candidate">Candidate</option>
+              <option value="employer">Employer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition disabled:bg-indigo-400"
           >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
